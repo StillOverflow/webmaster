@@ -1,0 +1,20 @@
+package chap13;
+
+import java.util.List;
+
+public class BoardExam604 {
+
+	public static void main(String[] args) {
+		//p603
+		BoardDao dao = new BoardDao();
+		List<Board> list = dao.getBoardList();
+		for(Board board : list) {
+			System.out.println(board.getTitle() + "-" + board.getContent());
+			System.out.println(board.toString());
+		}
+		
+		
+
+	}
+
+}

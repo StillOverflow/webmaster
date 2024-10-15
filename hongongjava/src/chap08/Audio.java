@@ -1,0 +1,28 @@
+package chap08;
+
+public class Audio implements RemoteControl{
+	//인터페이스 구현클래스(실체메소드 작성)에는 implements 사용(여러 개 동시에 가능)
+	//필드
+	private int volume;
+	
+	//생성자
+	
+	//메소드
+	@Override
+	public void turnOn() {
+		System.out.println("Audio를 켭니다.");
+	}
+	public void turnOff() {
+		System.out.println("Audio를 끕니다.");
+	}
+	public void setVolume(int volume) {
+		if(volume > RemoteControl.MAX_VOLUME) {
+			this.volume = RemoteControl.MAX_VOLUME;
+		} else if (volume < RemoteControl.MIN_VOLUME) {
+			this.volume = RemoteControl.MIN_VOLUME;
+		} else {
+			this.volume = volume;
+		}
+		System.out.println("현재 Audio 볼륨 : " + this.volume);
+	}
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.dao.MemberMapper">
+
+  <select id="members" resultType="com.yedam.vo.Member">
+    select * from tbl_member
+  </select>
+
+  <insert id="insertMember" parameterType="com.yedam.vo.Member">
+  	insert into tbl_member (member_id, member_name, password, phone)
+  	values (#{memberId}, #{memberName}, #{password}, #{phone})
+  </insert>
+  
+  <update id="updateMember" parameterType="com.yedam.vo.Member">
+  	update tbl_member
+  	set creation_date = creation_date 
+  	<if test="memberName != null">
+  	  , member_name = #{memberName}
+  	</if>
+  	<if test="password != null">
+  	  , password = #{password}
+  	</if>
+  	<if test="phone != null">
+  	  , phone = #{phone}
+  	</if>
+  	where member_id = #{memberId}
+  </update>
+  
+  <delete id="deleteMember" parameterType="string">
+    delete from tbl_member
+    where member_id = #{memberId}
+  </delete>
+  
+</mapper>
