@@ -23,4 +23,9 @@ public class Member {
 	private String phone;
 	private String responsibility;
 	private Date creationDate;
+	
+//	@Override
+//	public String toString() {
+//		return memberId + memberName + password + phone + responsibility + creationDate;
+//	}
 }

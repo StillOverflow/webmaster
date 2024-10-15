@@ -34,15 +34,42 @@ public class MemberListServlet extends HttpServlet {
 		List<Member> members = dao.members();
 		PrintWriter writer = response.getWriter();
 		
-		writer.print("<ul>");
-		String result = "";
+		writer.print("<table>");
+		writer.print("<th>아이디</th><th>이름</th><th>비밀번호</th><th>연락처</th><th>권한</th><th>생성일자</th>");
 		for(Member member : members) {
-			result += "<li>";
-			result += member.toString();
-			result += "</li>";
+			writer.print("<tr>");
+			writer.print("<td>");
+			writer.print(member.getMemberId());			
+			writer.print("</td>");
+			writer.print("<td>");
+			writer.print(member.getMemberName());			
+			writer.print("</td>");
+			writer.print("<td>");
+			writer.print(member.getPassword());			
+			writer.print("</td>");
+			writer.print("<td>");
+			writer.print(member.getPhone());			
+			writer.print("</td>");
+			writer.print("<td>");
+			writer.print(member.getResponsibility());			
+			writer.print("</td>");
+			writer.print("<td>");
+			writer.print(member.getCreationDate());			
+			writer.print("</td>");
+			writer.print("</tr>");
 		}
-		writer.print(result);
-		writer.print("</ul>");
+		writer.print("</table>");
+		
+//		writer.print("<ul>");
+//		String result = "";
+//		for(Member member : members) {
+//			result += "<li>";
+//			result += member.toString();
+//			result += "</li>";
+//		}
+//		writer.print(result);
+//		writer.print("</ul>");
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
