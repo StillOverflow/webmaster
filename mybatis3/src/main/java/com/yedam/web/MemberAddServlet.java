@@ -9,6 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.session.SqlSession;
+
+import com.yedam.common.DataSource;
+import com.yedam.dao.MemberMapper;
+import com.yedam.vo.Member;
+
 
 @WebServlet("/MemberAddServlet")
 public class MemberAddServlet extends HttpServlet {
@@ -30,7 +36,29 @@ public class MemberAddServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		request.setCharacterEncoding("utf-8");
+		
+		String id = request.getParameter("memberId");
+		String pw = request.getParameter("password");
+		String name = request.getParameter("memberName");
+		String phone = request.getParameter("phone");
+		
+		Member member = new Member();
+		member.setMemberId(id);
+		member.setPassword(pw);
+		member.setMemberName(name);
+		member.setPhone(phone);
+		
+		SqlSession sqlSession = DataSource.getInstance().openSession();
+		MemberMapper dao = sqlSession.getMapper(MemberMapper.class);
+		try {
+			if(dao.insertMember(member) == true) {
+				sqlSession.commit();
+				response.getWriter().print("OK");
+			}
+		} catch (Exception e) {
+			response.getWriter().print("NG");
+		}
 	}
 
 }
