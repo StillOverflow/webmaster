@@ -16,7 +16,7 @@ import com.yedam.dao.MemberMapper;
 import com.yedam.vo.Member;
 
 
-@WebServlet("/MemberAddServlet")
+@WebServlet("/html/MemberAddServlet")
 public class MemberAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,7 +31,7 @@ public class MemberAddServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		out.print("<h3>여기는 웹브라우저</h3>");
 		out.print("<h3>응답정보를 처리하는 객체: response</h3>");
-		out.print("<a href='index.html'>첫페이지로 이동</a>");
+		out.print("<a href='../index.html'>첫페이지로 이동</a>");
 	}
 
 

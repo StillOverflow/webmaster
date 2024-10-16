@@ -17,6 +17,8 @@ import com.yedam.dao.MemberMapper;
 import com.yedam.vo.Member;
 
 @WebServlet("/MemberListServlet")
+//IoC(객체의 역전)
+//객체 생성 => init() => service() => destroy() : 서블릿 순서에 맞게 개발해야 함.
 public class MemberListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -34,30 +36,19 @@ public class MemberListServlet extends HttpServlet {
 		List<Member> members = dao.members();
 		PrintWriter writer = response.getWriter();
 		
-		writer.print("<table>");
-		writer.print("<th>아이디</th><th>이름</th><th>비밀번호</th><th>연락처</th><th>권한</th><th>생성일자</th>");
+		writer.print("<table border='1'>");
+		writer.print("<thead><tr><th>아이디</th><th>이름</th><th>비밀번호</th><th>연락처</th><th>권한</th><th>생성일자</th></tr></thead>");
+		writer.print("<tbody>");
 		for(Member member : members) {
-			writer.print("<tr>");
-			writer.print("<td>");
-			writer.print(member.getMemberId());			
-			writer.print("</td>");
-			writer.print("<td>");
-			writer.print(member.getMemberName());			
-			writer.print("</td>");
-			writer.print("<td>");
-			writer.print(member.getPassword());			
-			writer.print("</td>");
-			writer.print("<td>");
-			writer.print(member.getPhone());			
-			writer.print("</td>");
-			writer.print("<td>");
-			writer.print(member.getResponsibility());			
-			writer.print("</td>");
-			writer.print("<td>");
-			writer.print(member.getCreationDate());			
-			writer.print("</td>");
-			writer.print("</tr>");
+			writer.print("<tr><td><a href='member.action?mid=" + member.getMemberId() + "'>"
+					      + member.getMemberId() + "</a></td><td>"
+					      + member.getMemberName() + "</td><td>"
+					      + member.getPassword() + "</td><td>"
+					      + member.getPhone() + "</td><td>"
+					      + member.getResponsibility() + "</td><td>"
+					      + member.getCreationDate() + "</td></tr>");
 		}
+		writer.print("</tbody>");
 		writer.print("</table>");
 		
 //		writer.print("<ul>");

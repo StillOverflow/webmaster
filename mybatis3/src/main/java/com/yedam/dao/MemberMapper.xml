@@ -7,6 +7,17 @@
   <select id="members" resultType="com.yedam.vo.Member">
     select * from tbl_member
   </select>
+  
+  <select id="selectMember" resultType="com.yedam.vo.Member">
+    select member_id
+          ,member_name
+          ,password
+          ,phone
+          ,responsibility
+          ,creation_date
+    from tbl_member
+    where member_id = #{memberId}
+  </select>
 
   <insert id="insertMember" parameterType="com.yedam.vo.Member">
   	insert into tbl_member (member_id, member_name, password, phone)
