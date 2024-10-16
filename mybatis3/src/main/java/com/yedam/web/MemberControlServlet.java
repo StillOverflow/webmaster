@@ -19,7 +19,7 @@ import com.yedam.vo.Member;
 //객체 생성 => init() => service() => destroy() : 서블릿 순서에 맞게 개발해야 함.
 
 //객체 생성 => init => service => destroy
-@WebServlet("/member.action") // 파일이 아닌 url주소임
+@WebServlet("/member.action") // 파일이 아닌 url주소임. member.action?mid=이름&aaa=bbb...이런 식으로 파라미터 얻게됨
 public class MemberControlServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
