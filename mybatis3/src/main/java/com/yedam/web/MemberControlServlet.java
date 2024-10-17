@@ -35,7 +35,7 @@ public class MemberControlServlet extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html; charset=utf-8");
+		resp.setContentType("text/html;charset=utf-8");
 		req.setCharacterEncoding("utf-8"); //parameter가 한글일 때 setCharacterEncoding utf-8 넣어줘야 함.
 		
 		System.out.println("서블릿을 요청할 때마다 실행");
