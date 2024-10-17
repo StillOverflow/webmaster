@@ -36,13 +36,23 @@ public class FrontController extends HttpServlet {
 		//회원등록 1)등록화면 2)등록처리 --반드시 순서대로 실행(.jsp로 바로연결할 수 없음.)
 		map.put("/memberAddForm.do", new MemberAddFormControl());
 		map.put("/memberAdd.do", new MemberAddControl());
+		
+		//게시판 관련
+		map.put("/boardList.do", new BoardListControl());
+		map.put("/board.do", new BoardControl());
+		//게시글 등록
+		map.put("/addBoardForm.do", new AddBoardForm());
+		map.put("/addBoard.do", new AddBoardControl());
+		//게시글 수정
+		map.put("/modifyBoard.do", new ModifyBoardControl());
+		//게시글 삭제
+		map.put("/removeBoard.do", new RemoveBoardControl());
 	}
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //		System.out.println("service호출");
 		//요청페이지가 뭔지?
-		req.setCharacterEncoding("utf-8"); //req.getParameter 인코딩방식
 		
 		String uri = req.getRequestURI(); //리소스 고유식별자(/FreeBoard/add.do)
 		System.out.println(uri);

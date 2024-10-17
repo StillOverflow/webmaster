@@ -15,6 +15,8 @@ public class MemberAddControl implements Control{
 	
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8"); //req.getParameter 인코딩방식
+		
 		System.out.println("MemberAddControl");
 		String id = req.getParameter("mid");
 		String nm = req.getParameter("mname");
