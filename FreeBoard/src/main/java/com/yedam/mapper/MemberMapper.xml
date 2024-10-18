@@ -44,4 +44,16 @@
     where member_id = #{memberId}
   </delete>
   
+  <select id="login" parameterType="string" resultType="member">
+    select member_id
+          ,member_name
+          ,password
+          ,phone
+          ,responsibility
+          ,creation_date
+    from tbl_member
+    WHERE member_id = #{arg0}
+      AND password = #{arg1} <!-- 파라미터가 2개 이상일 때는 param1, param2나 arg0, arg1 등 맞춰서 사용 -->
+  </select>
+  
 </mapper>

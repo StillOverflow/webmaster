@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <jsp:include page="../includes/header.jsp"></jsp:include>
 
-	<h3>글쓰기</h3>
+	<h3>회원등록</h3>
 	<form action="memberAdd.do" method="post">
 		<table border='1' class="table">
 			<tr>

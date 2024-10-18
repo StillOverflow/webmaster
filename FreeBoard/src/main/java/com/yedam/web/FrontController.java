@@ -47,6 +47,10 @@ public class FrontController extends HttpServlet {
 		map.put("/modifyBoard.do", new ModifyBoardControl());
 		//게시글 삭제
 		map.put("/removeBoard.do", new RemoveBoardControl());
+		
+		//로그인
+		map.put("/loginForm.do", new LoginControl());
+		map.put("/logout.do", new LogoutControl());
 	}
 	
 	@Override

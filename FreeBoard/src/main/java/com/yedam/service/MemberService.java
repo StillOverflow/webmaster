@@ -8,6 +8,7 @@ import com.yedam.vo.MemberVO;
 public interface MemberService {
 	boolean addMember(MemberVO member);
 	boolean retireMember(String id);
+	MemberVO login(String logId, String password);
 	
 	//회원목록 출력 메소드
 	List<MemberVO> memberList();

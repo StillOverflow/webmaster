@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.mapper.BoardMapper">
+	<!-- alias mybaits-config.xml에 설정해놓았으므로 타입에 alias만 적어도 됨. -->
+	<select id="boardList" resultType="board">
+		SELECT board_no
+		,title
+		,content
+		,writer
+		,view_cnt
+		,write_date
+		,update_date
+		FROM tbl_board
+		ORDER BY board_no
+	</select>
+
+	<select id="listWithPage" parameterType="com.yedam.common.SearchDTO" resultType="board">
+		SELECT b.*
+		FROM (SELECT ROWNUM rn, a.*
+				FROM (SELECT *
+						FROM tbl_board
+						<where> <!-- 검색조건 있을 시 where절 생성해줌 -->
+						    <choose>
+							   	<when test="searchCondition == 'T'.toString()">
+							   		title like '%'||#{keyword}||'%'
+							   	</when>
+							   	<when test="searchCondition == 'W'.toString()">
+							   		writer like '%'||#{keyword}||'%'
+							   	</when>
+							   	<when test="searchCondition == 'TW'.toString()">
+							   		(title like '%'||#{keyword}||'%') 
+							   		OR (writer like '%'||#{keyword}||'%') 
+							   	</when>
+						    </choose>
+					   	</where>
+					   ORDER BY board_no) a) b
+		WHERE b.rn > (#{page} - 1) * 5
+		<![CDATA[
+		AND b.rn <= (#{page} * 5)		
+		]]> <!-- <꺾쇠를 java코드로 인식하기 때문에 ![CDATA[]]로 감싸야 됨. -->
+	</select>
+
+	<insert id="insertBoard" parameterType="board">
+		INSERT INTO tbl_board (board_no, title, content, writer)
+		VALUES (board_seq.nextval, #{title}, #{content}, #{writer})
+	</insert>
+
+	<update id="updateBoard" parameterType="board">
+		UPDATE tbl_board
+		SET update_date = sysdate
+		<if test="title != null">
+			,title = #{title}
+		</if>
+		<if test="content != null">
+			,content = #{content}
+		</if>
+		WHERE board_no = #{boardNo}
+	</update>
+
+	<delete id="deleteBoard" parameterType="int">
+		DELETE FROM tbl_board
+		WHERE board_no = #{boardNo}
+	</delete>
+
+	<!-- parameterType="int" 반환타입 안 적어도 자동으로 작동할 수 있음. -->
+	<select id="selectBoard">
+		SELECT board_no
+		,title
+		,content
+		,writer
+		,view_cnt
+		,write_date
+		,update_date
+		FROM tbl_board
+		WHERE board_no = #{boardNo}
+		ORDER BY board_no
+	</select>
+
+	<update id="updateCount" parameterType="int">
+		UPDATE tbl_board
+		SET view_cnt = view_cnt + 1
+		WHERE board_no = #{boardNo}
+	</update>
+	
+	<select id="selectCount" parameterType="com.yedam.common.SearchDTO" resultType="int">
+		SELECT COUNT(board_no)
+		FROM tbl_board
+		<where> <!-- 검색조건 있을 시 where절 생성해줌 -->
+		    <choose>
+			   	<when test="searchCondition == 'T'.toString()">
+			   		title like '%'||#{keyword}||'%'
+			   	</when>
+			   	<when test="searchCondition == 'W'.toString()">
+			   		writer like '%'||#{keyword}||'%'
+			   	</when>
+			   	<when test="searchCondition == 'TW'.toString()">
+			   		(title like '%'||#{keyword}||'%') 
+			   		OR (writer like '%'||#{keyword}||'%') 
+			   	</when>
+		    </choose>
+	   	</where>
+	</select>
+
+</mapper>

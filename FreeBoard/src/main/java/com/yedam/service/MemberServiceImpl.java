@@ -27,6 +27,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	public MemberVO login(String logId, String password) {
+		return mapper.login(logId, password);
+	}
+	
+	@Override
 	public List<MemberVO> memberList() {
 		return mapper.members(); //mapper의 List<Member> 반환타입 메소드 실행
 	}
