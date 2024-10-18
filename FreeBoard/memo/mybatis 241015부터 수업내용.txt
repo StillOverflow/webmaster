@@ -1,0 +1,200 @@
+JAVA EE Perspective
+File - new - Dynamic Wep Project
+mybatis3 - 4.0ver. - web.xml 체크
+
+서버 apache tomcat 9 다운로드 - 압축 풀어 이클립스 Preferences - Runtime Environmanet에서 실행
+
+Preferences - Encoding 방식 모두 찾아서 UTF-8로 변경
+mybatis3 - src - webapp에서 HTML File 새로 생성(index.html)
+mybatis3 - Run as - Run On Server - Tomcat 선택 - 오류 발생 시 Overview - Servers - HTTP/1.1 80포트로 변경해서 다시 실행
+
+src/main/java 안에 패키지 com.yedam 생성
+연결 DAO 복사해서 넣고 com.yedam.vo 패키지 다시 생성
+
+=========
+
+//lombok, ojdbc 등 라이브러리 설치
+//mybatis 설치 후 mybatis3 오른쪽 클릭 > configure > Convert to Maven Project > pom.xml파일 생성됨(빌드내용들)
+
+  pom.xml파일에서 xmlns https => http로 수정 / source, target 컴파일러 버전 17 로 입력
+  (Ctrl + Shift + F 누르면 자동 정렬)
+//xml파일에 dependencies 태그 만들고 maven repository 에서 dependency 코드를 복사하여 붙여넣으면 라이브러리 설치를 위해 파일 받아서 lib폴더에 붙여넣는 등 복잡한 과정 필요없음. (다운로드 없이 태그와 dependency 코드를 붙여넣는 것만으로도 라이브러리 설치 가능)
+ => Libraries - Maven Dependencies 안에 라이브러리 자동으로 생성됨.
+ * lombok은 메이븐 mybatis 쓰더라도 사이트에서 한 번 설치 필요
+
+
+★★mybatis 초기세팅
+1. SqlSessionFactory 빌드
+src/main/java 안에 DataSource 클래스 생성
+mybatis 사이트에서 SqlSessionFactory 빌드 가이드 보면서 복사 붙여넣기
+(mybatis의 InputStream, Resources 클래스와 SqlSessionFactory, SqlSessionFactoryBuilder 인스턴스 클래스 사용됨. resource="config/mybatis-config.xml" 만들어서 넣기)
+mybatis3 오른쪽 클릭 - Build Path 에서 Source 항목의 missing 부분들 확인하여 Edit - remove 하고 적용
+
+** src/main/recources 안에 config 폴더 생성
+config 폴더 - new others... xml 검색하여 생성(이름 mybatis-config.xml)
+mybatis의 핵심이 되는 설정을 붙여넣음.
+Preferences - Maven - Download Artifact javadoc 체크하면 빨간 줄 사라짐(오류는 아님)
+driver, url, username, password 각 항목에 DAO 연결 설정할 때 쓴 내용들 입력, resources = "com/yedam/dao/MemberMapper.xml" (해당 위치에 만들어서 설정)
+column명에 _ 언더바 들어간 것 인식하기 위해, configureation 안에 camelcase 넣어야 함. =>
+  <settings>
+  	<setting name="mapUnderscoreToCamelCase" value="true"/>
+  </settings>
+
+===>
+매핑된 sql구문 살펴보기 예시를 MemberMapper.xml 파일 만들어 붙여넣기.
+(mapper namespace=패키지 및 경로(com.yedam.dao.MemberMapper)
+ id=members(호출할때 쓸 이름. 메소드형식과 비슷), resultType(반환타입)=com.yedam.bo.Member
+ select 태그 안에 select * from tbl_member << sql구문 입력하면 됨.)
+ insert 태그 만들면 내용 : 
+            insert into tml_member (member_id, member_name, password, phone)
+  	values (#{memberId}, #{memberName}, #{password}, #{phone})
+
+xml파일과 똑같은 위치에 MemberMapper 인터페이스 생성
+(구현방식 설정하는 인터페이스.
+내용: public List<Member> members() 추상메소드 만들어둠.)
+
+===>
+메인메소드 클래스 만들어서 MemberDAO 사용 대신 SqlSession sqlSession 생성
+내용: 
+SqlSession sqlSession = DataSource.getInstance().openSession();
+		MemberMapper dao = sqlSession.getMapper(MemberMapper.class);
+		
+		List<Member> result = dao.members();
+		for(Member member : result) {
+			System.out.println(member.toString());
+		}
+
+Run as Java application 항목으로 실행.
+
+==========
+Java Resources => src/main/java 폴더 안에 들어있는 내용들
+com.yedam.common
+=> 메인메소드 들어있는 클래스
+=> DAO(연결 메소드 들어있는 DAO)//// mybatis 구현 시 안 써도 됨.
+=> DataSource 클래스 => mybaits-config.xml 을 리소스로 받는 SqlSessionFactory 빌드 클래스 (getInstance 메소드)
+com.yedam.dao
+=> memberDAO 클래스 (DAO 상속)//// mybatis 구현 시 안 써도 됨.
+=> MemberMapper 클래스 => xml 구현할 인터페이스
+=> MemberMapper.xml 파일 => 실행할 sql구문 입력(select resultType 결과 타입, 그외 구문 parameterType 으로 변수 받을 타입 설정)
+com.yedam.vo
+=> tbl_member 값 담을 클래스(private 각 필드 column과 lombok 활용한 getter, setter, tostring 구현)
+
+Java Resources => src/main/resources 폴더 안에 들어있는 내용들
+config
+=> mybaits-config.xml => DataSource 클래스에서 SqlSessionFactory 빌드할 때 필요. 리소스로 MemberMapper.xml 지정. 
+==========
+
+
+
+git Perspective에서 Clone 으로 깃 서버 주소 입력 및 로그인.
+공유하고자 하는 프로젝트 오른쪽 클릭 - team 에서 Share Project 선택하면 git 공유 가능.
+공유중인 프로젝트 commit 시 내 로컬 컴퓨터에 admin/git 경로로 폴더 생성됨.
+텍스트파일 만들어서 .gitignore 파일 안에 보여주지 않을 예외폴더 입력.
+/.settings/
+/bin/
+/lib/
+/.classpath
+/.project
+
+https://github.com/StillOverflow/webmaster.git
+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
+깃 연결 토큰으로 비밀번호에 입력하면 깃 온라인 서버에 push 가능.
+
+공유했던 것 받아올 때는 import 한 뒤에 pom.xml 오른쪽 클릭 - Maven - Update Project 해야함.
+
+
+==========
+
+src/main/java 안에 com.yedam.web 패키지 만들고, 그 안에 서블릿 (MemberAddServlet  => Servlet) 생성 => Run as - Run on Server 선택하여 서버 불러올 수 있음.
+
+* 서버 = 톰캣 불러오기
+: Build Path => Add Library => Server Runtime 선택하면 톰캣 불러올 수 있음.
+
+
+
+==========
+241016 수업내용
+FreeBoard 게시판 프로젝트 생성 후 초기세팅 똑같이 하고, mybatis-config.xml 세팅 밑에 에 alias 입력
+<typeAliases>
+   <typeAlias alias="member" type="com.yedam.vo.MemberVO"/>
+   <typeAlias alias="board" type="com.yedam.vo.BoardVO"/>
+</typeAliases>
+세팅 위에 properties (File)생성하여 입력: db접속과 관련된 정보를 넣어두면 xml파일에 value="${driver}" 이런식으로 적어도 접속 시 파일에서 읽어오는 용도.
+<properties resource="config/db.properties" />
+
+help - Eclipse Marketplace에서 mybatipse 설치(편리한 mybatis 도움말기능)
+=> Ctrl + Space 누르면 자동완성해줌
+
+//IoC(Inversion of Control 객체의 역전)
+  서블릿 개발 시, 객체 생성 => init() => service() => destroy() 순서에 맞게 개발해야 함.
+
+
+index.html 또는 index.jsp 없을 시 프로젝트 바로 Run as on Server 하면 오류 나긴 함.(url 입력하면 정상 실행)
+webapp 폴더에 index.jsp 작성 후 실행하면 실제로 실행되는 파일경로는 D:\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\work\Catalina\localhost\FreeBoard\org\apache\jsp (참고. 이클립스에서 자동 생성)
+
+src/////webapp 폴더에 imdex.jsp와 더불어 jsp폴더 따로 만들어 memberList.jsp도 작성.(jsp로 따로 쓰는 이유는 html태그 작성을 더 편리하게 하기 위해. 요청은 FrontController - MemberListControl - memberList.jsp로 setAttribute, getAttribute로 List 타입으로서 전송됨.)
+
+
+***차이***
+=> 원래 개별적인 Servlet 여러 개 구현했을 때 과정
+   : SqlSession을 DataSource.getInstance().openSession()) 로 SqlSessionFactory 구현
+     mapper dao는 SqlSession.getMapper(매퍼.클래스); 
+     List 타입으로 받아서 PrintWriter(response의 getWriter 메소드 반환타입) 사용해 태그로서 바로 print
+      IoC(객체역전-제3자가 프로그램 실행 흐름 제어)에 따라 구현 시, doGet, doPost 대신 if(req.getMethod().equals(GET")) 또는 POST 식으로 넣을 수 있음.
+     
+
+=> MVC(모델, 뷰, 컨트롤러) 패턴으로 여러 작업을 jsp와 FrontController 통해 구현
+   : HashMap 타입으로 (키: url식별자, 값: 실행할 컨트롤러=개별적인 서블릿) 받아서 Control 인터페이스로 map.get(~.do)하여 해당 컨트롤러를 얻고 실행.
+   : 개별적인 컨트롤러(서블릿과 유사) 안에는 sql구문 구현하는 mapper를 업무로직 재정의한 ~service와 ~serviceImpl를 사용해 List타입으로 실행값 받음.
+     req.setAttribute("담아서 보내는 이름", List 결과변수 이름); 에 담아서
+     try catch 통해 req.getRequestDispatcher(jsp/컨트롤러이름.jsp).forward(req, resp); 형태로 jsp로 요청을 넘김.(~.do 요청 재지정)
+   : 컨트롤러이름의 jsp파일에서는 getAttribute("담아서 받을 이름")로 List타입 받아 동적 html태그 프린트. (<% %> 안에 자바코드 적을 수 있음)
+*** select 구문 같은 단순 출력은 이런 식으로 jsp에서 표시 가능하지만, insert 등 다른 구문 컨트롤러 구현 시 WEB-INF - jsp 폴더 안에 jsp파일들이 있어야 정상 출력 가능하며, ~form.jsp와 컨트롤러를 만들어 addForm.do 실행 시 formController에서 addForm.jsp로 단순forward 한번 거쳐 addForm.jsp에서 form action="add.do"로 연결하는 식으로 차례로 수행해야 함. 그리고 최종적으로 addControl에서는 try-catch문 이용해 결과를 다른 형식으로(list.do로 resp.sendRedirect() 한다든지) 출력해야 함. (select 이외에 직접 jsp로 넘길 수 없음.)
+========> 프론트컨트롤러에서 uri에 따라 컨트롤.exec 실행 -> jsp로 넘김 -> jsp에서 표시 혹은 jsp에서 ~.do로 또 넘기는 진행방식
+
+WEB-INF/jsp/memberList.jsp 이런 식으로 폴더 이동하여 직접 열지 못하게 처리할 수 있음(SELECT문 외에 INSERT, ADD기능 등은 WEB-INF 안에 넣고 나서 memberList.do 식으로 브라우저에 url 입력해야 열 수 있음.)
+*** tomcat 서버에서는 필수사항. jsp파일이 특정 경로에 있어야 실행될 수 있게 설정됨.
+
+---이클립스 webapp에 template 폴더에 들어있는 내용물(부트스트랩 스타일시트) 붙여넣고, WEB-INF 폴더 안에 includes 폴더 만들어 header.jsp, footer.jsp 에 위 page부분 제외하고 밑에서부터 붙여넣기
+원하는 jsp파일에 위, 아래 <jsp:include page="../includes/header.jsp"></jsp:include>, footer까지 붙여넣으면 document type이나 head, body 등 필요없이 내용만 적어도 됨.
+header.jsp에서 Dashboard를 회원목록으로 바꾸고 memberList.do 로 변경. 각 메뉴 모두 변경 가능.
+table class="table" 로 클래스 설정 시 테이블에도 스타일시트 적용 가능.
+
+
+==========
+241017 수업내용
+
+Board 테이블, VO, Mapper 생성, src/test/java 폴더에 테스트용 메인메소드로 샘플 데이터들 출력 (mybatis-config.xml에 mapper resource="경로.../Mapper.xml" 등록해야 함.)
+
+java에서 쓸 수 있는 String date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+   String date = sdf.format()
+   => SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+/*대문자 DD는 해당 연도의 nnn번째 일~ 나타남.
+MMM은 축약형 단어, MMMM은 풀네임 단어, F는 몇 번째 발생한 요일인지,E는 축약형 요일, u는 calendar 처럼 1월~7일 까지 숫자요일.
+w는 해당 연도 몇 번째 주인지, W는 월에서 몇 번째 주인지, h는 12시간형식, H는 0~23시간형식, K는 오전~오후로 0~11시까지 표시, k는 0~24시간형식
+s는 그냥 초, S는 밀리초, a는 AM/PM....*/
+
+* getbootstrap.com 의 Docs에서 에서 부트스트랩의 css class 또는 html 코드 볼 수 있음. pagiation, form 등....
+
+* form에서 method="get" 하면 주소창에 파라미터 형태 나타남. 파라미터는 get 할 때 캐스트 연산자 넣어서 받아햐 함.
+
+==========
+241018 수업내용
+modify.do에서도 수정 완료 시 현재페이지로 돌아가도록 페이지 넘기기
+검색조건 만들기
+
+mybatis 참고, logback.xml 만들기(콘솔에 쿼리문 모두 출력하여 확인 가능한 라이브러리) => mvnrepository에서 Logback Classic Module 1.5.11 dependency 복사하여 pom.xml에 입력, src/main/resources 안에 logback.xml 파일 생성하여 mybatis log글 참고하여 내용 붙여넣기. level value="debug"로 수정
+
+HttpSession session = request.getSession();
+session.setAttribute("id", id); 이런 식으로 로그인하여 세션에 데이터 담아냄. 세션값이 null 되면 로그아웃으로 보여지게 (String 강제 캐스팅하는 게 아니라 String.valueOf()로 해야 함.)
+
+JSTL: JSP Standart Library = tomcat.apache에 있음.
+주소: https://tomcat.apache.org/taglibs/standard/
+1.2.3버전 다운로드 - Binary ReadMe 클릭, dependency 가져와서 pom.xml에 넣기
+CORE LIBRARY 코드 jsp상단에 적은 뒤, prefix="my" 하면 아래와 같이도 쓸 수 있음.
+<my:set></my:set>
+:choose, when, otherwise로 조건문 쓸 수 있고, set, out, if test="${}", forEach var="" begin="" end="" step="증가값" 반복문...
+index.jsp 페이지에서 연습 ----
+<!-- <jsp:forward page="boardList.do"></jsp:forward> --> (주석처리 안 됨)
+CORE 라이브러리 외에 fmt(포맷) 라이브러리도 사용 가능. (fmt:formatDate value="넣을 값" pattern="yyyy-MM-dd HH:mm:ss")
+==> 라이브러리 활용 커스텀태그 사용 시, 객체 개념 없이 바로 사용 가능(equals도 필요없음)
