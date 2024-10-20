@@ -11,26 +11,10 @@
 
 <jsp:include page="../includes/header.jsp"></jsp:include>
 
-<%
-List<BoardVO> list = (List<BoardVO>) request.getAttribute("boardList");
-SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-/*대문자 DD는 해당 연도의 nnn번째 일~ 나타남.
-MMM은 축약형 단어, MMMM은 풀네임 단어, F는 몇 번째 발생한 요일인지,E는 축약형 요일, u는 calendar 처럼 1월~7일 까지 숫자요일.
-w는 해당 연도 몇 번째 주인지, W는 월에서 몇 번째 주인지, h는 12시간형식, H는 0~23시간형식, K는 오전~오후로 0~11시까지 표시, k는 0~24시간형식
-s는 그냥 초, S는 밀리초, a는 AM/PM....*/
-%>
-<%
-PageDTO paging = (PageDTO) request.getAttribute("page");
-int currentP = paging.getPage(); //현재페이지
-SearchDTO search = (SearchDTO) request.getAttribute("search");
-String sc = search.getSearchCondition() == null? "" : search.getSearchCondition();
-String kw = search.getKeyword() == null? "" : search.getKeyword();
-%>
-<!--<p><%//=list %></p>-->
 <h3>자유게시판</h3>
 <!-- 검색조건 넣기 -->
 <form class="row g-3" action="boardList.do" method="get">
-	<input type="hidden" name="page" value="<%=paging.getPage() %>">
+	<input type="hidden" name="page" value="${page.page }">
 	<div class="col-md-4">
 		<select id="inputState" name="sc" class="form-select">
 			<option selected>선택</option>
@@ -40,7 +24,7 @@ String kw = search.getKeyword() == null? "" : search.getKeyword();
 		</select>
 	</div>
 	<div class="col-md-2">
-		<input type="text" class="form-control" id="inputZip" name="keyword" value=<%=kw %>>
+		<input type="text" class="form-control" id="inputZip" name="keyword" value=${search.keyword }>
 	</div>
 	<div class="col-md-2">
 		<button type="submit" class="btn btn-primary">검색</button>
@@ -59,14 +43,11 @@ String kw = search.getKeyword() == null? "" : search.getKeyword();
 		</tr>
 	</thead>
 	<tbody>
-		<%
-		//int count = currentP * 5 - 5;
-		//for (BoardVO bvo : list) {
-			//count++;
-		%>
+		<c:set var="p" value="${page.page * 5 - 5 }"></c:set>
 		<c:forEach var="bvo" items="${boardList }"> <!-- 속성을 직접 쓸 수 있음. -->
+			<c:set var="p" value="${p + 1 }"></c:set>
 			<tr>
-				<td></td>
+				<td>${p }</td>
 				<td><c:out value="${bvo.boardNo }"></c:out></td>
 				<td><a
 					href="board.do?page=${page.page }&bno=${bvo.boardNo }&sc=${search.searchCondition }&keyword=${search.keyword }">${bvo.title }</a></td>
@@ -85,10 +66,10 @@ String kw = search.getKeyword() == null? "" : search.getKeyword();
 	
 		<c:if test="${page.prev == true }">
 		<li class="page-item"><a class="page-link"
-			href="boardList.do?page=${page.startPage - 1 }">Previous</a></li>
+			href="boardList.do?page=${page.startPage - 1 }&sc=${search.searchCondition }&keyword=${search.keyword }">Previous</a></li>
 		</c:if>
 		
-		<c:forEach var="i" begin="${page.startPage }" end="${page.endPage }">
+		<c:forEach var="i" begin="${page.startPage }" end="${page.endPage }" step="1">
 			<c:choose>
 				<c:when test="${page.page == i}">
 					<li class="page-item active" aria-current="page"><a
@@ -103,7 +84,7 @@ String kw = search.getKeyword() == null? "" : search.getKeyword();
 
 		<c:if test="${page.next == true}">
 			<li class="page-item"><a class="page-link"
-				href="boardList.do?page=${page.endPage - 1 }">Next</a></li>
+				href="boardList.do?page=${page.endPage + 1 }&sc=${search.searchCondition }&keyword=${search.keyword }">Next</a></li>
 		</c:if>
 
 	</ul>

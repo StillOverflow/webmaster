@@ -2,6 +2,7 @@
 <%@ page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../includes/header.jsp"></jsp:include>
 	
 	<h3>회원목록</h3>
@@ -11,14 +12,12 @@
 	%>
 	<table border="2" class="table">
 		<tbody>
-			<%
-			for (MemberVO mvo : list) {
-			%>
-				<tr><td><%=mvo.getMemberId()%></td>
-					<td><%=mvo.getMemberName()%></td>
-					<td><%=mvo.getPhone()%></td>
+			<c:forEach var="mvo" items="${memberList }">
+				<tr><td><c:out value="${mvo.memberId }"></c:out></td>
+					<td><c:out value="${mvo.memberName }"></c:out></td>
+					<td><c:out value="${mvo.phone }"></c:out></td>
 				</tr>			
-			<% } %>
+			</c:forEach>
 		</tbody>
 	</table>
 

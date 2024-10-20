@@ -4,13 +4,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <jsp:include page="../includes/header.jsp"></jsp:include>
-<%
-HttpSession sess = request.getSession();
-String logId = String.valueOf(sess.getAttribute("logId"));
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <h3>글쓰기</h3>
 <form action="addBoard.do" method="post">
-	<input type="hidden" name="writer" class="form-control" value="<%=logId %>">
+	<input type="hidden" name="writer" class="form-control" value="${logId }">
 	<table class="table">
 		<tr>
 			<th>제목</th>
@@ -23,18 +21,15 @@ String logId = String.valueOf(sess.getAttribute("logId"));
 		</tr>
 		<tr>
 			<th>작성자</th>
-			<td><%=logId %></td>
+			<td>${logId }</td>
 		</tr>
 		<tr>
 			<td colspan="2" align="center"><input type="submit" value="저장"
 				class="btn btn-secondary"> <input type="reset" value="초기화"
 				class="btn btn-light">
-				<%
- 				String msg = (String) request.getAttribute("msg");
- 				if (msg != null) {
- 				%>
-				<span style="color: red"><%=msg%></span> 
-				<%}%>
+				<c:if test="${msg != null }">
+					<span style="color: red">${msg }</span> 
+				</c:if>
 			</td>
 		</tr>
 	</table>
