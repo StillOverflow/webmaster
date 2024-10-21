@@ -85,7 +85,7 @@ String kw = search.getKeyword() == null? "" : search.getKeyword();
 		if (paging.isPrev()) {
 		%>
 		<li class="page-item"><a class="page-link"
-			href="boardList.do?page=<%=paging.getStartPage() - 1%>">Previous</a></li>
+			href="boardList.do?page=<%=paging.getStartPage() - 1%>&sc=<%=sc %>&keyword=<%=kw %>">Previous</a></li>
 		<%
 		}
 		%>
@@ -119,7 +119,7 @@ String kw = search.getKeyword() == null? "" : search.getKeyword();
 		if (paging.isNext()) {
 		%>
 		<li class="page-item"><a class="page-link"
-			href="boardList.do?page=<%=paging.getEndPage() + 1%>">Next</a></li>
+			href="boardList.do?page=<%=paging.getEndPage() + 1%>&sc=<%=sc %>&keyword=<%=kw %>">Next</a></li>
 		<%
 		}
 		%>
