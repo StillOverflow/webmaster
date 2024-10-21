@@ -5,7 +5,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:include page="../includes/header.jsp"></jsp:include>
 
 <% 
 	//BoardVO bvo = (BoardVO) request.getAttribute("boardvo");
@@ -16,7 +15,7 @@
 	//String writeDate = sdf.format(bvo.getWriteDate());
 %>
 <h3>수정화면</h3>
-<form action="modifyBoard.do" method="post">
+<form action="modifyBoard.do" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="bno" value="${boardvo.boardNo }">
 	<input type="hidden" name="page" value="${page }">
 	<input type="hidden" name="sc" value="${sc }">
@@ -33,6 +32,18 @@
 		<tr>
 			<th>내용</th>
 			<td colspan="3"><textarea rows="8" cols="30" name="content" class="form-control"><c:out value="${boardvo.content }"></c:out></textarea></td>
+		</tr>
+		<tr>
+			<th>이미지</th><td colspan="3">
+			<c:if test="${boardvo.img != null }">
+				<img src="images/${boardvo.img }" alt="img" width="100"></td>
+			</c:if>
+		</tr>
+		<tr>
+			<th></th>
+			<td colspan="3">
+			<input type="file" name="img" class="form-control">
+			</td>
 		</tr>
 		<tr>
 			<th>작성자</th>
@@ -53,6 +64,3 @@
 		</tr>
 	</table>
 </form>
-
-
-<jsp:include page="../includes/footer.jsp"></jsp:include>

@@ -22,7 +22,8 @@ public class MemberListControl implements Control{
 		
 		try {
 			//memberList.do 요청재지정 (memberList.jsp로 자원이나 요청을 보냄)
-			req.getRequestDispatcher("WEB-INF/jsp/memberList.jsp").forward(req, resp);
+			//req.getRequestDispatcher("WEB-INF/jsp/memberList.jsp").forward(req, resp);
+			req.getRequestDispatcher("admin/memberList.tiles").forward(req, resp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

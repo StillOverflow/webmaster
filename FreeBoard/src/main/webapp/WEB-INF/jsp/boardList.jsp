@@ -9,8 +9,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<jsp:include page="../includes/header.jsp"></jsp:include>
-
 <h3>자유게시판</h3>
 <!-- 검색조건 넣기 -->
 <form class="row g-3" action="boardList.do" method="get">
@@ -92,8 +90,6 @@
 	<input type="button" value="보기" class="btn btn-light">
 	<p id="toString">${page }</p>
 </nav>
-
-<jsp:include page="../includes/footer.jsp"></jsp:include>
 
 <script>
 	let toString = document.querySelector('#toString');

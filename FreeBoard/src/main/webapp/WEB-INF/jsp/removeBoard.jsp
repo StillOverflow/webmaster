@@ -5,7 +5,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:include page="../includes/header.jsp"></jsp:include>
 
 <%
 	/*BoardVO bvo = (BoardVO) request.getAttribute("boardvo");
@@ -37,6 +36,12 @@
 		<th>내용</th><td colspan="3"><textarea rows="8" cols="30" name="content" class="form-control" readonly>${boardvo.content} </textarea></td>
 	</tr>
 	<tr>
+		<th>이미지</th><td colspan="4">
+		<c:if test="${boardvo.img != null }">
+			<img src="images/${boardvo.img }" alt="img" width="100"></td>
+		</c:if>
+	</tr>
+	<tr>
 		<th>작성자</th><td colspan="3"><c:out value="${boardvo.writer}" /></td>
 	</tr>
 	<tr>
@@ -50,5 +55,3 @@
 	</tr>	
 </table>
 </form>
-
-<jsp:include page="../includes/footer.jsp"></jsp:include>

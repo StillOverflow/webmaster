@@ -8,14 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.yedam.common.Control;
 
-public class MemberAddFormControl implements Control {
+public class JavascriptControl implements Control {
 
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//jsp 페이지 open 구현
-		//Control에서 예외처리 throws 넣으면 try-catch문 반복생성 안 해도 됨.
-//		req.getRequestDispatcher("WEB-INF/jsp/memberAddForm.jsp").forward(req, resp);
-		req.getRequestDispatcher("board/memberAddForm.tiles").forward(req, resp);
+		req.getRequestDispatcher("javascript/javascript.tiles").forward(req, resp);;
 	}
 
 }

@@ -15,7 +15,8 @@ public class LogoutControl implements Control {
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession sess = req.getSession();
 		sess.removeAttribute("logId");
-		resp.sendRedirect("loginForm.do");	
+		sess.removeAttribute("responsibility");
+		resp.sendRedirect("loginForm.do");
 	}
 
 }

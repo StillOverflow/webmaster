@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+  <definition name="myapp.homepage" template="/layouts/classic.jsp">
+    <put-attribute name="title" value="Tiles tutorial homepage" />
+    <put-attribute name="header" value="/tiles/banner.jsp" />
+    <put-attribute name="menu" value="/tiles/common_menu.jsp" />
+    <put-attribute name="body" value="/tiles/home_body.jsp" />
+    <put-attribute name="footer" value="/tiles/credits.jsp" />
+  </definition>
+  <!-- 불러오는 법 : FreeBoard/myapp.homepage.tiles 혹은 FreeBoard/a/body3.tiles -->
+
+
+  <definition name="user.home" template="/WEB-INF/layout/template.jsp">
+    <put-attribute name="title" value="일반 사용자용 템플릿" />
+    <put-attribute name="body" value="/WEB-INF/layout/body.jsp" /> <!-- 기본값이 있어야 함. -->
+  </definition>
+  <definition name="WILDCARD:board/*" extends="user.home">
+    <put-attribute name="body" value="/WEB-INF/jsp/{1}.jsp" />
+  </definition>
+  
+  <definition name="admin.home" template="/WEB-INF/layout/templateAdmin.jsp">
+    <put-attribute name="title" value="관리자용 템플릿" />
+    <put-attribute name="body" value="/WEB-INF/layout/bodyAdmin.jsp" /> <!-- 기본값이 있어야 함. -->
+  </definition>
+  <definition name="WILDCARD:admin/*" extends="admin.home">
+    <put-attribute name="body" value="/WEB-INF/jsp/{1}.jsp" />
+  </definition>
+  
+  <definition name="WILDCARD:*/*" extends="user.home">
+    <put-attribute name="body" value="/WEB-INF/jsp/{1}/{2}.jsp" />
+  </definition>
+
+</tiles-definitions>

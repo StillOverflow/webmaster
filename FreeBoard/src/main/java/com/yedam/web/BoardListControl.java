@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.yedam.common.Control;
 import com.yedam.common.PageDTO;
@@ -41,7 +42,19 @@ public class BoardListControl implements Control {
 		req.setAttribute("search", search);
 //		req.setAttribute("page", page);
 		
-		req.getRequestDispatcher("WEB-INF/jsp/boardList.jsp").forward(req, resp);
+		//req.getRequestDispatcher("WEB-INF/jsp/boardList.jsp").forward(req, resp);
+		//tiles 적용하면 jsp를 여는 게 아니라 tiles링크로 열면 됨.
+		//WILDCARD:board/* 및 body에 /WEB-INF/jsp/{1}.jsp 설정해놓았으므로 해당 경로 모든 jsp파일에 적용 가능.
+		HttpSession sess = req.getSession(false);
+		String responsibility = String.valueOf(sess.getAttribute("responsibility"));
+		System.out.println(responsibility);
+		
+		if(responsibility.equals("Admin")) {
+			req.getRequestDispatcher("admin/boardList.tiles").forward(req, resp);
+		} else {
+			req.getRequestDispatcher("board/boardList.tiles").forward(req, resp);
+		}
+		
 	}
 
 }

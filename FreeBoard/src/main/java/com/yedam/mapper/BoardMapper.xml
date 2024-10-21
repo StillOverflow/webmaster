@@ -13,7 +13,7 @@
 		,write_date
 		,update_date
 		FROM tbl_board
-		ORDER BY board_no
+		ORDER BY board_no DESC
 	</select>
 
 	<select id="listWithPage" parameterType="com.yedam.common.SearchDTO" resultType="board">
@@ -35,7 +35,7 @@
 							   	</when>
 						    </choose>
 					   	</where>
-					   ORDER BY board_no) a) b
+					   ORDER BY board_no DESC) a) b
 		WHERE b.rn > (#{page} - 1) * 5
 		<![CDATA[
 		AND b.rn <= (#{page} * 5)		
@@ -43,8 +43,8 @@
 	</select>
 
 	<insert id="insertBoard" parameterType="board">
-		INSERT INTO tbl_board (board_no, title, content, writer)
-		VALUES (board_seq.nextval, #{title}, #{content}, #{writer})
+		INSERT INTO tbl_board (board_no, title, content, writer, img)
+		VALUES (board_seq.nextval, #{title}, #{content}, #{writer}, #{img})
 	</insert>
 
 	<update id="updateBoard" parameterType="board">
@@ -55,6 +55,9 @@
 		</if>
 		<if test="content != null">
 			,content = #{content}
+		</if>
+		<if test="img != null">
+			,img = #{img}
 		</if>
 		WHERE board_no = #{boardNo}
 	</update>
@@ -73,6 +76,7 @@
 		,view_cnt
 		,write_date
 		,update_date
+		,img
 		FROM tbl_board
 		WHERE board_no = #{boardNo}
 		ORDER BY board_no
