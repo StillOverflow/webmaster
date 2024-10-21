@@ -24,7 +24,7 @@ public class RemoveBoardControl implements Control {
 		String pg = req.getParameter("page");
 		String sc = req.getParameter("sc");
 		String kw = req.getParameter("keyword");
-		HttpSession sess = req.getSession(false);
+		HttpSession sess = req.getSession();
 		String responsibility = String.valueOf(sess.getAttribute("responsibility"));
 		System.out.println(responsibility);
 		

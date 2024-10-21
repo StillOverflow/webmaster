@@ -31,6 +31,8 @@ public class BoardListControl implements Control {
 		search.setSearchCondition(sc);
 		search.setKeyword(kw);
 		search.setPage(Integer.parseInt(page));
+		System.out.println(search.getKeyword());
+		System.out.println(kw);
 		
 		//글목록 조회 후 jsp 전달
 		BoardService svc = new BoardServiceImpl();
@@ -45,7 +47,7 @@ public class BoardListControl implements Control {
 		//req.getRequestDispatcher("WEB-INF/jsp/boardList.jsp").forward(req, resp);
 		//tiles 적용하면 jsp를 여는 게 아니라 tiles링크로 열면 됨.
 		//WILDCARD:board/* 및 body에 /WEB-INF/jsp/{1}.jsp 설정해놓았으므로 해당 경로 모든 jsp파일에 적용 가능.
-		HttpSession sess = req.getSession(false);
+		HttpSession sess = req.getSession();
 		String responsibility = String.valueOf(sess.getAttribute("responsibility"));
 		System.out.println(responsibility);
 		

@@ -35,8 +35,8 @@
 	<tr>
 		<td colspan="4" align="center">
 			<input type="button" class="btn btn-primary" value="목록">
-			<input type="button" ${logId != null && boardvo.writer == logId ? "" : "disabled" } class="btn btn-secondary" value="수정">
-			<input type="button" ${logId != null && boardvo.writer == logId ? "" : "disabled" } class="btn btn-light" value="삭제">
+			<input type="button" ${(logId != null && boardvo.writer == logId) || responsibility == "Admin" ? "" : "disabled" } class="btn btn-secondary" value="수정">
+			<input type="button" ${(logId != null && boardvo.writer == logId) || responsibility == "Admin" ? "" : "disabled" } class="btn btn-light" value="삭제">
 		</td>
 	</tr>	
 </table>
@@ -55,11 +55,11 @@
 	});
 
 	document.querySelector('input[value="수정"]').addEventListener('click', function(e){
-		location.href = 'modifyBoard.do?page=<%=pg %>&bno=<%=bvo.getBoardNo() %>&sc=<%=sc %>&keyword=<%=kw %>';
+		location.href = 'modifyBoard.do?page=<%=pg %>&bno=<%=bvo.getBoardNo() %>&sc=<%=sc %>&keyword=<%=kw == null ? "" : kw %>';
 	});
 	
 	document.querySelector('input[value="삭제"]').addEventListener('click', function(e){
-		location.href = 'removeBoard.do?page=<%=pg %>&bno=<%=bvo.getBoardNo() %>&sc=<%=sc %>&keyword=<%=kw %>';
+		location.href = 'removeBoard.do?page=<%=pg %>&bno=<%=bvo.getBoardNo() %>&sc=<%=sc %>&keyword=<%=kw == null ? "" : kw %>';
 	});
 	
 </script>

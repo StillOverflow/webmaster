@@ -14,7 +14,7 @@ public class AddBoardForm implements Control {
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//req.getRequestDispatcher("WEB-INF/jsp/addBoardForm.jsp").forward(req, resp);
-		HttpSession sess = req.getSession(false);
+		HttpSession sess = req.getSession();
 		String responsibility = String.valueOf(sess.getAttribute("responsibility"));
 		System.out.println(responsibility);
 		

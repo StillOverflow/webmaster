@@ -30,7 +30,7 @@ public class BoardControl implements Control {
 		req.setAttribute("keyword", req.getParameter("keyword"));
 		
 		//req.getRequestDispatcher("WEB-INF/jsp/board.jsp").forward(req, resp);
-		HttpSession sess = req.getSession(false);
+		HttpSession sess = req.getSession();
 		String responsibility = String.valueOf(sess.getAttribute("responsibility"));
 		System.out.println(responsibility);
 		

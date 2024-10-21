@@ -20,23 +20,15 @@ public class ModifyBoardControl implements Control {
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		
-		MultipartRequest mr = new MultipartRequest(
-				//요청경로, 저장경로, 파일 최대 크기, 인코딩방식
-				req
-				,req.getServletContext().getRealPath("images")
-				,1024 * 1024 * 5
-				,"utf-8"
-				,new DefaultFileRenamePolicy() //똑같은 파일 이름 있으면 이름 바꿔서 계속 업로드
-				);
 		
 		//GET: 수정화면, POST: 수정처리 두 가지 구현
-		String bno = mr.getParameter("bno");				
 		BoardService svc = new BoardServiceImpl();
-		String pg = mr.getParameter("page");
-		String sc = mr.getParameter("sc");
-		String kw = mr.getParameter("keyword");
-		HttpSession sess = req.getSession(false);
+		HttpSession sess = req.getSession();
 		String responsibility = String.valueOf(sess.getAttribute("responsibility"));
+		String bno = req.getParameter("bno");				
+		String pg = req.getParameter("page");
+		String sc = req.getParameter("sc");
+		String kw = req.getParameter("keyword");
 		
 		if(req.getMethod().equals("GET")) {			
 			
@@ -54,6 +46,20 @@ public class ModifyBoardControl implements Control {
 			}
 			
 		} else if (req.getMethod().equals("POST")) {
+			
+			MultipartRequest mr = new MultipartRequest(
+					//요청경로, 저장경로, 파일 최대 크기, 인코딩방식
+					req
+					,req.getServletContext().getRealPath("images")
+					,1024 * 1024 * 5
+					,"utf-8"
+					,new DefaultFileRenamePolicy() //똑같은 파일 이름 있으면 이름 바꿔서 계속 업로드
+					);
+			
+			bno = mr.getParameter("bno");
+			pg = mr.getParameter("page");
+			sc = mr.getParameter("sc");
+			kw = mr.getParameter("keyword");
 			
 			String title = mr.getParameter("title");
 			String content = mr.getParameter("content");

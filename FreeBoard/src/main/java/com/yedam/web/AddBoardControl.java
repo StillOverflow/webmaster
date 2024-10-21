@@ -55,7 +55,7 @@ public class AddBoardControl implements Control {
 			e.printStackTrace();
 			req.setAttribute("msg", "오류가 발생했습니다.");
 			//req.getRequestDispatcher("WEB-INF/jsp/addBoardForm.jsp").forward(req, resp);
-			HttpSession sess = req.getSession(false);
+			HttpSession sess = req.getSession();
 			String responsibility = String.valueOf(sess.getAttribute("responsibility"));
 			System.out.println(responsibility);
 			

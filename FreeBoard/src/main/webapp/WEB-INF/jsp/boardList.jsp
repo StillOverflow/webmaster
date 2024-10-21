@@ -48,7 +48,13 @@
 				<td>${p }</td>
 				<td><c:out value="${bvo.boardNo }"></c:out></td>
 				<td><a
-					href="board.do?page=${page.page }&bno=${bvo.boardNo }&sc=${search.searchCondition }&keyword=${search.keyword }">${bvo.title }</a></td>
+					href="board.do?page=${page.page }&bno=${bvo.boardNo }&sc=${search.searchCondition }&keyword=${search.keyword }">
+					${bvo.title }
+					<c:if test="${bvo.img != null }">
+					<i class="fa-regular fa-image"></i>
+					</c:if>
+					</a>
+				</td>
 				<!-- 내용은 안에 클릭하면 상세화면에 나오도록 -->
 				<td><c:out value="${bvo.writer }"></c:out></td>
 				<td><fmt:formatDate value="${bvo.writeDate }" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
