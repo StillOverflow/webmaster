@@ -8,6 +8,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <h3>자유게시판</h3>
 <!-- 검색조건 넣기 -->
@@ -51,7 +52,7 @@
 					href="board.do?page=${page.page }&bno=${bvo.boardNo }&sc=${search.searchCondition }&keyword=${search.keyword }">
 					${bvo.title }
 					<c:if test="${bvo.img != null }">
-					<i class="fa-regular fa-image"></i>
+						<i class="fa-regular fa-image"></i>
 					</c:if>
 					</a>
 				</td>

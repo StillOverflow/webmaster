@@ -1,0 +1,22 @@
+//json 문자열
+
+const data = `[{"id":1,"first_name":"Aron","last_name":"Hanton","email":"ahanton0@blogspot.com","gender":"Male","salary":"$6715.71"},
+{"id":2,"first_name":"Johannah","last_name":"McCarroll","email":"jmccarroll1@vk.com","gender":"Female","salary":"$2949.01"},
+{"id":3,"first_name":"Crista","last_name":"Fairebrother","email":"cfairebrother2@hibu.com","gender":"Female","salary":"$9619.13"},
+{"id":4,"first_name":"Kelly","last_name":"Rignold","email":"krignold3@facebook.com","gender":"Female","salary":"$8971.25"},
+{"id":5,"first_name":"Abner","last_name":"Kilner","email":"akilner4@unblog.fr","gender":"Male","salary":"$2413.61"},
+{"id":6,"first_name":"Donetta","last_name":"Leaburn","email":"dleaburn5@patch.com","gender":"Female","salary":"$7569.03"},
+{"id":7,"first_name":"Norry","last_name":"Jouaneton","email":"njouaneton6@livejournal.com","gender":"Genderqueer","salary":"$3207.99"},
+{"id":8,"first_name":"Chucho","last_name":"Zorzenoni","email":"czorzenoni7@marketwatch.com","gender":"Male","salary":"$9958.75"},
+{"id":9,"first_name":"Marcel","last_name":"Zimmermeister","email":"mzimmermeister8@tiny.cc","gender":"Male","salary":"$3679.92"},
+{"id":10,"first_name":"Willdon","last_name":"Gillison","email":"wgillison9@liveinternet.ru","gender":"Male","salary":"$2597.65"},
+{"id":11,"first_name":"Sal","last_name":"Mackriell","email":"smackriella@epa.gov","gender":"Male","salary":"$2908.11"},
+{"id":12,"first_name":"Orton","last_name":"Greggersen","email":"ogreggersenb@gmpg.org","gender":"Male","salary":"$4436.35"},
+{"id":13,"first_name":"Connie","last_name":"Normanvell","email":"cnormanvellc@discuz.net","gender":"Male","salary":"$5583.77"},
+{"id":14,"first_name":"Nat","last_name":"Cordelette","email":"ncordeletted@i2i.jp","gender":"Male","salary":"$7113.62"},
+{"id":15,"first_name":"Saundra","last_name":"Pittford","email":"spittforde@yandex.ru","gender":"Male","salary":"$5646.71"},
+{"id":16,"first_name":"Celestyn","last_name":"Verick","email":"cverickf@nyu.edu","gender":"Female","salary":"$3723.26"},
+{"id":17,"first_name":"Marya","last_name":"Uvedale","email":"muvedaleg@stanford.edu","gender":"Female","salary":"$7124.32"},
+{"id":18,"first_name":"Wendeline","last_name":"Bartholomieu","email":"wbartholomieuh@facebook.com","gender":"Female","salary":"$4421.70"},
+{"id":19,"first_name":"Tadio","last_name":"Lilly","email":"tlillyi@ucla.edu","gender":"Male","salary":"$3560.95"},
+{"id":20,"first_name":"Casey","last_name":"Noore","email":"cnoorej@patch.com","gender":"Female","salary":"$5281.06"}]`;

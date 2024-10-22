@@ -38,7 +38,7 @@
 	<tr>
 		<th>이미지</th><td colspan="4">
 		<c:if test="${boardvo.img != null }">
-			<img src="images/${boardvo.img }" alt="img" width="100"></td>
+			<img src="images/${boardvo.img }" alt="img" width="500"></td>
 		</c:if>
 	</tr>
 	<tr>

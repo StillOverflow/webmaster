@@ -12,6 +12,7 @@
 		,view_cnt
 		,write_date
 		,update_date
+		,img
 		FROM tbl_board
 		ORDER BY board_no DESC
 	</select>

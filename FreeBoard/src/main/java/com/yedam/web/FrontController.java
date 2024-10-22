@@ -12,6 +12,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.yedam.common.Control;
+import com.yedam.control.JavascriptControl;
+import com.yedam.control.etcControl;
+import com.yedam.control.board.AddBoardControl;
+import com.yedam.control.board.AddBoardForm;
+import com.yedam.control.board.BoardControl;
+import com.yedam.control.board.BoardListControl;
+import com.yedam.control.board.ModifyBoardControl;
+import com.yedam.control.board.RemoveBoardControl;
+import com.yedam.control.board.ReplyListControl;
+import com.yedam.control.member.LoginControl;
+import com.yedam.control.member.LogoutControl;
+import com.yedam.control.member.MemberAddControl;
+import com.yedam.control.member.MemberAddFormControl;
+import com.yedam.control.member.MemberListControl;
+import com.yedam.control.member.MemberjsonControl;
+import com.yedam.control.member.addMemberjsonControl;
+import com.yedam.control.member.removeMemberjsonControl;
 
 //Servlet은 여러 개 있으면 복잡하므로 프로젝트 시 1개만 생성할 것임.
 //대표 컨트롤러 => FrontController : MVC모델로 수많은 뷰에서 들어오는 요청들을 하나의 대표 컨트롤러에서 일괄적으로 처리하는 디자인패턴
@@ -52,7 +69,16 @@ public class FrontController extends HttpServlet {
 		map.put("/loginForm.do", new LoginControl());
 		map.put("/logout.do", new LogoutControl());
 		
-		map.put("/javascript.do", new JavascriptControl());
+		map.put("/javascript.do", new JavascriptControl()); //javascript/javascript.jsp 열어주는 컨트롤러
+		map.put("/etc.javascript.do", new etcControl()); //etc/javascript.jsp 열어주는 컨트롤러
+		map.put("/memberjson.do", new MemberjsonControl());
+		//Json데이터를 가져오는 컨트롤러 따로 있어야 함.
+		//javascript.jsp에 컨트롤러에서 가져온 데이터 활용, member.js에서 동적 테이블 그리기.
+		map.put("/addMemberjson.do", new addMemberjsonControl());
+		map.put("/removeMemberjson.do", new removeMemberjsonControl());
+		
+		//댓글 구현
+		map.put("/replyList.do", new ReplyListControl());
 	}
 	
 	@Override

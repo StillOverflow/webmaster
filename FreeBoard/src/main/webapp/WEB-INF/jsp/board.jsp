@@ -23,7 +23,7 @@
 	<tr>
 		<th>이미지</th><td colspan="4">
 		<c:if test="${boardvo.img != null }">
-			<img src="images/${boardvo.img }" alt="img" width="100"></td>
+			<img src="images/${boardvo.img }" alt="img" width="500"></td>
 		</c:if>
 	</tr>
 	<tr>
@@ -41,8 +41,14 @@
 	</tr>	
 </table>
 
+<table id="replyList" class="table">
+</table>
+
 <jsp:include page="../includes/footer.jsp"></jsp:include>
 <!-- 버튼이 여러개 있을 시, form action="링크" 으로 감싸도 되고 자바스크립트로 구현해도 됨. -->
+<script src="js/replyService.js"></script> <!-- 댓글 관련 메소드 정의 -->
+<script src="js/reply.js"></script> <!-- 메소드 호출하여 사용 -->
+
 <script>
 	<%
 	BoardVO bvo = (BoardVO) request.getAttribute("boardvo");

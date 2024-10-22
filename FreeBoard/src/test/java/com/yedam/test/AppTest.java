@@ -9,7 +9,10 @@ import com.yedam.common.SearchDTO;
 import com.yedam.mapper.BoardMapper;
 import com.yedam.service.MemberService;
 import com.yedam.service.MemberServiceImpl;
+import com.yedam.service.ReplyService;
+import com.yedam.service.ReplyServiceImpl;
 import com.yedam.vo.BoardVO;
+import com.yedam.vo.ReplyVO;
 
 public class AppTest {
 
@@ -57,6 +60,22 @@ public class AppTest {
 		
 		MemberService memMapper = new MemberServiceImpl();
 		System.out.println(memMapper.login("user01", "55555"));
+		
+		ReplyService repsvc = new ReplyServiceImpl();
+		
+		ReplyVO reply = new ReplyVO();
+		reply.setReply("댓글입니다.");
+		reply.setReplyer("user01");
+		reply.setBoardNo(392);
+		
+		repsvc.registerReply(reply);
+		
+		List<ReplyVO> list = repsvc.replyList(392);
+		for(ReplyVO rep : list) {
+			System.out.println(rep.toString());
+		}
+		
+		System.out.println(repsvc.selectReply(1));
 
 	}
 
