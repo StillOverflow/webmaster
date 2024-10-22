@@ -11,7 +11,7 @@
 <h3>상세페이지</h3>
 <table class="table">
 	<tr>
-		<th>글번호</th><td>${boardvo.boardNo }</td>
+		<th>글번호</th><td data-id="bno">${boardvo.boardNo }</td>
 		<th>조회수</th><td>${boardvo.viewCnt }</td>
 	</tr>
 	<tr>
@@ -41,8 +41,22 @@
 	</tr>	
 </table>
 
+<h4>댓글목록</h4>
 <table id="replyList" class="table">
+
 </table>
+
+<div id="addReplyBox" class="row g-3">
+<span class="col-md-1">${logId }</span>
+<div class="col-md-9">
+<textarea id="reply" rows="2" cols="20" ${logId == null ? "readonly" : "" } class="form-control">
+${logId == null ? "로그인 이후에 작성 가능합니다." : "" }
+</textarea>
+</div>
+<div class="col-md-2">
+<button type="button" id="addReplyBtn" ${logId == null ? "disabled" : "" } class="btn btn-secondary">등록</button>
+</div>
+</div>
 
 <jsp:include page="../includes/footer.jsp"></jsp:include>
 <!-- 버튼이 여러개 있을 시, form action="링크" 으로 감싸도 되고 자바스크립트로 구현해도 됨. -->

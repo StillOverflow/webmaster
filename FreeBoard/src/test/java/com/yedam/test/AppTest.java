@@ -44,38 +44,38 @@ public class AppTest {
 			System.out.println("조회에 성공했습니다.");
 		}
 		
-//		List<BoardVO> list = mapper.boardList();
-//		for(BoardVO bvo2 : list) {
-//			System.out.println(bvo2.toString());
-//		}
+		List<BoardVO> list = mapper.boardList();
+		for(BoardVO bvo2 : list) {
+			System.out.println(bvo2.toString());
+		}
 		
 		System.out.println("페이징 방식 구현");
 		SearchDTO search = new SearchDTO();
-		search.setPage(3);
+		search.setPage(20);
 		
-//		list = mapper.listWithPage(search);
-//		for(BoardVO bvo2 : list) {
-//			System.out.println(bvo2.toString());
-//		}
-		
-		MemberService memMapper = new MemberServiceImpl();
-		System.out.println(memMapper.login("user01", "55555"));
-		
-		ReplyService repsvc = new ReplyServiceImpl();
-		
-		ReplyVO reply = new ReplyVO();
-		reply.setReply("댓글입니다.");
-		reply.setReplyer("user01");
-		reply.setBoardNo(392);
-		
-		repsvc.registerReply(reply);
-		
-		List<ReplyVO> list = repsvc.replyList(392);
-		for(ReplyVO rep : list) {
-			System.out.println(rep.toString());
+		list = mapper.listWithPage(search);
+		for(BoardVO bvo2 : list) {
+			System.out.println(bvo2.toString());
 		}
 		
-		System.out.println(repsvc.selectReply(1));
+//		MemberService memMapper = new MemberServiceImpl();
+//		System.out.println(memMapper.login("user01", "55555"));
+//		
+//		ReplyService repsvc = new ReplyServiceImpl();
+//		
+//		ReplyVO reply = new ReplyVO();
+//		reply.setReply("댓글입니다.");
+//		reply.setReplyer("user01");
+//		reply.setBoardNo(392);
+//		
+//		repsvc.registerReply(reply);
+//		
+//		List<ReplyVO> list = repsvc.replyList(392);
+//		for(ReplyVO rep : list) {
+//			System.out.println(rep.toString());
+//		}
+//		
+//		System.out.println(repsvc.selectReply(1));
 
 	}
 

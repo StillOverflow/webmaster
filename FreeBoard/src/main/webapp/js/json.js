@@ -14,10 +14,12 @@ console.log(json);
 //.json data를 불러오는 방법 : 
 //ajax 구현하는 방법 중 하나인 fetch 사용
 //fetch('json파일 경로').then(function(){return response.json()배열로 반환}).then()
-fetch('js/MOCK_DATA.json').then(function(resolve){
+fetch('js/MOCK_DATA.json')
+.then(function(resolve){
 	console.log(resolve);
 	return resolve.json(); //읽은 데이터를 json객체로 변환하여 반환.
-}).then(function (result) { //result라는 최종적인 배열로 만들어 반환.
+})
+.then(function (result) { //result라는 최종적인 배열로 만들어 반환.
 	console.log(result);
 	//makeList(result);
 })

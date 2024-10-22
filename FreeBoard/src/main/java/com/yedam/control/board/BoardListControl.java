@@ -13,6 +13,8 @@ import com.yedam.common.PageDTO;
 import com.yedam.common.SearchDTO;
 import com.yedam.service.BoardService;
 import com.yedam.service.BoardServiceImpl;
+import com.yedam.service.ReplyService;
+import com.yedam.service.ReplyServiceImpl;
 import com.yedam.vo.BoardVO;
 
 public class BoardListControl implements Control {

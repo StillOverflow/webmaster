@@ -18,12 +18,17 @@ public class ReplyListControl implements Control{
 
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("text/json;charset=utf-8");
+		
 		String bno = req.getParameter("bno");
 		
 		ReplyService svc = new ReplyServiceImpl();
 		List<ReplyVO> list = svc.replyList(Integer.parseInt(bno));
 		
+		//List타입으로 데이터를 생성하면 직접 for문으로 String json문자열 만들어도 되지만,
+		//Gson 라이브러리 활용하면 json문자열로 편리하게 만들어줌.
 		Gson gson = new GsonBuilder().create();
+		System.out.println("Gson: " + gson + gson.toString());
 		String json = gson.toJson(list); //자바 객체를 json문자열로 변경.
 		
 		resp.getWriter().print(json);

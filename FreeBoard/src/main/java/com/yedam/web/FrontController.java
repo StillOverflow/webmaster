@@ -16,6 +16,7 @@ import com.yedam.control.JavascriptControl;
 import com.yedam.control.etcControl;
 import com.yedam.control.board.AddBoardControl;
 import com.yedam.control.board.AddBoardForm;
+import com.yedam.control.board.AddReplyControl;
 import com.yedam.control.board.BoardControl;
 import com.yedam.control.board.BoardListControl;
 import com.yedam.control.board.ModifyBoardControl;
@@ -79,6 +80,7 @@ public class FrontController extends HttpServlet {
 		
 		//댓글 구현
 		map.put("/replyList.do", new ReplyListControl());
+		map.put("/addReply.do", new AddReplyControl());
 	}
 	
 	@Override

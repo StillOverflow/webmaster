@@ -8,6 +8,12 @@ const svc = {
 		.then(successFunc)
 		.catch(errorFunc)
 	},
+	radd(reply = [], successFunc, errorFunc){
+		fetch('addReply.do?bno=' + reply[1] + '&replyer=')
+		.then(resolve => resolve.json()) //화살표함수 사용 시 자동 return 반환
+		.then(successFunc)
+		.catch(errorFunc)
+	},
 	showMsg(msg){
 		console.log(msg);
 	}

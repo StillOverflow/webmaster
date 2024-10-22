@@ -48,11 +48,14 @@
 			<tr>
 				<td>${p }</td>
 				<td><c:out value="${bvo.boardNo }"></c:out></td>
-				<td><a
+				<td><a class="text-decoration-none"
 					href="board.do?page=${page.page }&bno=${bvo.boardNo }&sc=${search.searchCondition }&keyword=${search.keyword }">
 					${bvo.title }
 					<c:if test="${bvo.img != null }">
 						<i class="fa-regular fa-image"></i>
+					</c:if>
+					<c:if test="${bvo.replyCnt != 0 }">
+						<span>[${bvo.replyCnt }]</span>
 					</c:if>
 					</a>
 				</td>

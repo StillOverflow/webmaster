@@ -20,8 +20,8 @@
 	<select id="listWithPage" parameterType="com.yedam.common.SearchDTO" resultType="board">
 		SELECT b.*
 		FROM (SELECT ROWNUM rn, a.*
-				FROM (SELECT *
-						FROM tbl_board
+				FROM (SELECT board.*, (SELECT COUNT(*) FROM tbl_reply r WHERE board.board_no = r.board_no) reply_cnt
+						FROM tbl_board board
 						<where> <!-- 검색조건 있을 시 where절 생성해줌 -->
 						    <choose>
 							   	<when test="searchCondition == 'T'.toString()">
