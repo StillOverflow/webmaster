@@ -8,6 +8,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<style>
+	.reply {
+		margin: 0;
+		max-width: 100%;
+	}
+	.reply span {
+		display: inline-block;
+		margin-top: 5px;
+	}
+	.reply ul {
+		list-style: none;
+		padding: 0;
+	}
+	.pagination {
+		justify-content: center;
+	}
+	.pagination * {
+		cursor: pointer;
+	}
+</style>
+
 <h3>상세페이지</h3>
 <table class="table">
 	<tr>
@@ -41,45 +62,80 @@
 	</tr>	
 </table>
 
-<h4>댓글목록</h4>
-<table id="replyList" class="table">
-
-</table>
-
+<h4>댓글</h4>
+<!-- 댓글 작성 박스  -->
 <div id="addReplyBox" class="row g-3">
-<span class="col-md-1">${logId }</span>
-<div class="col-md-9">
-<textarea id="reply" rows="2" cols="20" ${logId == null ? "readonly" : "" } class="form-control">
-${logId == null ? "로그인 이후에 작성 가능합니다." : "" }
-</textarea>
+	<span class="col-md-1">${logId }</span>
+	<div class="col-md-9">
+		<textarea id="reply" rows="1" cols="20" ${logId == null ? "readonly" : "" } class="form-control">${logId == null ? "로그인 이후에 작성 가능합니다." : "" }</textarea>
+	</div>
+	<div class="col-md-2">
+		<button type="button" id="addReplyBtn" ${logId == null ? "disabled" : "" } class="btn btn-secondary">등록</button>
+	</div>
 </div>
-<div class="col-md-2">
-<button type="button" id="addReplyBtn" ${logId == null ? "disabled" : "" } class="btn btn-secondary">등록</button>
+
+<hr>
+<!-- 작성된 댓글 항목 -->
+<div class="container reply">
+	<div class="content">
+		<ul>
+			<li>
+				<span class="col-sm-1">순서</span>
+				<span class="col-sm-1">번호</span>
+				<span class="col-sm-4">내용</span>
+				<span class="col-sm-1">작성자</span>
+				<span class="col-sm-3">작성일시</span>
+				<span class="col-sm-1"></span>
+			</li>
+		</ul>
+	</div>
 </div>
-</div>
+
+<nav aria-label="Reply Page navigation">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- 
+<table id="replyList" class="table">
+	<tbody>
+	
+	</tbody>
+</table>
+-->
 
 <jsp:include page="../includes/footer.jsp"></jsp:include>
 <!-- 버튼이 여러개 있을 시, form action="링크" 으로 감싸도 되고 자바스크립트로 구현해도 됨. -->
-<script src="js/replyService.js"></script> <!-- 댓글 관련 메소드 정의 -->
-<script src="js/reply.js"></script> <!-- 메소드 호출하여 사용 -->
 
 <script>
-	<%
-	BoardVO bvo = (BoardVO) request.getAttribute("boardvo");
-	String pg = (String) request.getAttribute("page");
-	String sc = (String) request.getAttribute("sc");
-	String kw = (String) request.getAttribute("kw");
-	%>
+
+	const bno = '${boardvo.boardNo }';
+	const logId = '${logId}'
+	console.log(bno);
+	
 	document.querySelector('input[value="목록"]').addEventListener('click', function(e){
-		location.href = 'boardList.do?page=<%=pg %>&sc=<%=sc %>&keyword=<%=kw == null ? "" : kw %>';
+		location.href = 'boardList.do?page=${page}&sc=${sc}&keyword=${kw == null ? "" : kw}';
 	});
 
 	document.querySelector('input[value="수정"]').addEventListener('click', function(e){
-		location.href = 'modifyBoard.do?page=<%=pg %>&bno=<%=bvo.getBoardNo() %>&sc=<%=sc %>&keyword=<%=kw == null ? "" : kw %>';
+		location.href = 'modifyBoard.do?page=${page}&bno=${boardvo.boardNo}&sc=${sc}&keyword=${kw == null ? "" : kw}';
 	});
 	
 	document.querySelector('input[value="삭제"]').addEventListener('click', function(e){
-		location.href = 'removeBoard.do?page=<%=pg %>&bno=<%=bvo.getBoardNo() %>&sc=<%=sc %>&keyword=<%=kw == null ? "" : kw %>';
+		location.href = 'removeBoard.do?page=${page}&bno=${boardvo.boardNo}&sc=${sc}&keyword=${kw == null ? "" : kw}';
 	});
 	
 </script>
+<script src="js/replyService.js"></script> <!-- 댓글 관련 메소드 정의 -->
+<script src="js/reply.js"></script> <!-- 메소드 호출하여 사용 -->

@@ -9,15 +9,31 @@
 		,reply
 		,replyer
 		,board_no
-		,reply_date
+		,TO_CHAR(reply_date, 'YYYY-MM-DD HH24:MI') reply_date
 		FROM tbl_reply
 		WHERE board_no = #{boardNo}
 		ORDER BY reply_no DESC
 	</select>
+	
+	<select id="selectListPaging" resultType="reply">
+		SELECT a.*
+		FROM (SELECT ROWNUM rn, r.*
+      		  FROM tbl_reply r
+      	      WHERE r.board_no = #{boardNo}
+      		  ORDER BY reply_no DESC) a
+		WHERE a.rn > (#{page} - 1) * 5
+		<![CDATA[
+		AND   a.rn <= (#{page} * 5)		
+		]]>
+	</select>
 
 	<insert id="insertReply" parameterType="reply">
+		<selectKey keyProperty="replyNo" order="BEFORE" resultType="int"> <!-- insert 쿼리 실행 전 key 추출-->
+			SELECT reply_seq.nextval FROM dual
+		</selectKey>
+		
 		INSERT INTO tbl_reply(reply_no, reply, replyer, board_no)
-		VALUES (reply_seq.nextval, #{reply}, #{replyer}, #{boardNo})
+		VALUES (#{replyNo}, #{reply}, #{replyer}, #{boardNo})
 	</insert>
 
 	<delete id="deleteReply" parameterType="int">
@@ -34,6 +50,12 @@
 		,reply_date
 		FROM tbl_reply
 		WHERE reply_no = #{replyNo}
+	</select>
+	
+	<select id="countReply" parameterType="int" resultType="int">
+		SELECT COUNT(1)
+		FROM tbl_reply
+		WHERE board_no = #{boardNo}
 	</select>
 
 </mapper>

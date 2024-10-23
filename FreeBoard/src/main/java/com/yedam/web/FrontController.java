@@ -21,6 +21,7 @@ import com.yedam.control.board.BoardControl;
 import com.yedam.control.board.BoardListControl;
 import com.yedam.control.board.ModifyBoardControl;
 import com.yedam.control.board.RemoveBoardControl;
+import com.yedam.control.board.RemoveReplyControl;
 import com.yedam.control.board.ReplyListControl;
 import com.yedam.control.member.LoginControl;
 import com.yedam.control.member.LogoutControl;
@@ -78,9 +79,12 @@ public class FrontController extends HttpServlet {
 		map.put("/addMemberjson.do", new addMemberjsonControl());
 		map.put("/removeMemberjson.do", new removeMemberjsonControl());
 		
-		//댓글 구현
+		//댓글 javasciprt 동적 구현
 		map.put("/replyList.do", new ReplyListControl());
+		map.put("/removeReply.do", new RemoveReplyControl());
 		map.put("/addReply.do", new AddReplyControl());
+		//댓글의 전체 개수 가져오는 컨트롤러
+		map.put("/countReply.do", new CountReplyControl());
 	}
 	
 	@Override
