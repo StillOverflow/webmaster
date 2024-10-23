@@ -16,14 +16,15 @@
 	</select>
 	
 	<select id="selectListPaging" resultType="reply">
-		SELECT a.*
-		FROM (SELECT ROWNUM rn, r.*
-      		  FROM tbl_reply r
-      	      WHERE r.board_no = #{boardNo}
-      		  ORDER BY reply_no DESC) a
-		WHERE a.rn > (#{page} - 1) * 5
+		SELECT b.*
+		FROM  (SELECT ROWNUM rn, a.*
+      		   FROM  (SELECT *
+      		          FROM   tbl_reply
+      	              WHERE  board_no = #{boardNo}
+      		          ORDER  BY reply_no DESC) a) b
+		WHERE b.rn > (#{page} - 1) * 5
 		<![CDATA[
-		AND   a.rn <= (#{page} * 5)		
+		AND   b.rn <= (#{page} * 5)		
 		]]>
 	</select>
 

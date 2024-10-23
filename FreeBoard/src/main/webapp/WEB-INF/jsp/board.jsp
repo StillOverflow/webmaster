@@ -16,6 +16,7 @@
 	.reply span {
 		display: inline-block;
 		margin-top: 5px;
+		white-space: pre-line;
 	}
 	.reply ul {
 		list-style: none;
@@ -67,7 +68,7 @@
 <div id="addReplyBox" class="row g-3">
 	<span class="col-md-1">${logId }</span>
 	<div class="col-md-9">
-		<textarea id="reply" rows="1" cols="20" ${logId == null ? "readonly" : "" } class="form-control">${logId == null ? "로그인 이후에 작성 가능합니다." : "" }</textarea>
+		<textarea id="reply" rows="1" cols="20" wrap="hard" ${logId == null ? "readonly" : "" } class="form-control">${logId == null ? "로그인 이후에 작성 가능합니다." : "" }</textarea>
 	</div>
 	<div class="col-md-2">
 		<button type="button" id="addReplyBtn" ${logId == null ? "disabled" : "" } class="btn btn-secondary">등록</button>
@@ -90,7 +91,7 @@
 		</ul>
 	</div>
 </div>
-
+<!-- 댓글 페이징 네비게이션 -->
 <nav aria-label="Reply Page navigation">
   <ul class="pagination">
     <li class="page-item">

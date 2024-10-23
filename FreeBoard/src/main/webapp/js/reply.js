@@ -1,13 +1,14 @@
 //replyService.js에서 정의해놓은 기능들 활용
 
+//메소드 호출 예시
+svc.showMsg('Hello, 예시입니다.');
+
 //bno 가져오기
 /*
 let bno = document.querySelector('[data-id="bno"]').innerHTML;
 console.log(bno);
 */
 
-//메소드 호출 예시
-svc.showMsg('Hello, 예시입니다.');
 
 //댓글 목록 출력
 /*
@@ -33,12 +34,14 @@ function(err){
 });
 */
 
+
 //페이징방식 추가
 //기본출력 1페이지
 showList(1);
+
 //pagination a 클릭 이벤트
 //forEach로 nodeList의 각각 매개변수마다 콜백함수 실행 가능.
-//function(a,b,c){} a:현재 요소, b:현재 요소의 인덱스, c:노드리스트
+//forEach(function(a,b,c){});  a:현재 요소, b:현재 요소의 인덱스, c:노드리스트
 function linkMove(){
 	document.querySelectorAll('nav ul.pagination a').forEach((aTag) => {
 			aTag.addEventListener('click', moveFunc);
@@ -46,7 +49,7 @@ function linkMove(){
 }
 
 function moveFunc(e){
-	e.preventDefault(); //이동 차단(새로고침 없이 page만 동적으로 가져옴)
+	e.preventDefault(); //기본이벤트(href) 차단(페이지이동 없이 값만 동적으로 가져옴)
 	console.log(e.target.innerHTML);
 	//let page = e.target.innerHTML;
 	let page = e.target.dataset.page; //데이터 담기 위해 dataset으로 가져옴
@@ -58,17 +61,20 @@ function showList(page){
 	
 	let replyCnt = page * 5 - 4;
 	
+	//댓글목록 삭제
 	document.querySelectorAll('div.reply div.content li').forEach((li, idx) => {
 		if(idx > 0){
 			li.remove();			
 		}
 	});
 	
+	//페이지 네비게이션도 처음과 끝 남기고 삭제
 	document.querySelectorAll('ul.pagination li').forEach((li, idx, lis) => {
 		if(idx > 0 & idx < lis.length - 1){
 			li.remove();			
 		}
 	});
+	
 	//페이지별 댓글목록 출력
 	svc.replyList({bno, page},
 	function(result){
@@ -85,29 +91,29 @@ function showList(page){
 			template.querySelector('span:nth-of-type(6)').innerHTML = isDelBtn(result[i][fields[2]]);
 			document.querySelector('.reply ul').appendChild(template);			
 			replyCnt++;
-	}
+		}
 	
-	let buttons = document.querySelectorAll('span button');
-	for(let i = 0; i < buttons.length; i++){
-		buttons[i].addEventListener('click', deleteRow)
-	}
-	
-	svc.getReplyCount(bno, 
-		result => {
-			createPageList(page, result.totalCount);
-		}, 
-		err => console.log(err)
-	);
+		let buttons = document.querySelectorAll('span button');
+		for(let i = 0; i < buttons.length; i++){
+			buttons[i].addEventListener('click', deleteRow)
+		}
+		
+		svc.getReplyCount(bno, 
+			result => {
+				createPageList(page, result.totalCount);
+			}, 
+			err => console.log(err)
+		);
 	
 	},
 	err => console.log(err));
 }
 	
 //페이지목록 계산하여 nav 출력하는 함수
-function createPageList(page, totalCnt){ //현재 페이지 매개변수로 받음
+function createPageList(page, totalCnt){ //현재 페이지값 매개변수로 받음
 	//페이지 수 계산
 	//let totalCnt; //값 가져와야 됨.
-	//console.log('total', totalCnt); // 비동기작업이므로 처리속도가 맞지 않아, fetch함수내에서 쓰지 않으면 totalCnt값은 마음대로 할당되지 않음.
+	//console.log('total', totalCnt); // 비동기작업이므로 처리속도가 서로 달라, fetch함수내에서 쓰지 않으면 totalCnt값을 할당할 수 없음.
 	let startPage, endPage, realEnd;
 	let prev, next;
 	
@@ -120,6 +126,7 @@ function createPageList(page, totalCnt){ //현재 페이지 매개변수로 받�
 	prev = startPage > 1;
 	next = endPage < realEnd;
 	
+	//nav li 생성
 	let ul = document.querySelector('nav ul.pagination');
 	let prevLi = ul.firstElementChild;
 	let nextLi = ul.lastElementChild;
@@ -138,16 +145,20 @@ function createPageList(page, totalCnt){ //현재 페이지 매개변수로 받�
 	}
 	*/
 	
-	console.log(prev, next);
 	if(prev){
-		prevLi.querySelector('li a').setAttribute('data-page', startPage - 1);
+		prevLi.querySelector('a').setAttribute('data-page', startPage - 1);
+		prevLi.querySelector('a').style.pointerEvents = 'auto';
 	} else {
-		prevLi.querySelector('li a').preventDefault();
+		prevLi.querySelector('a').style.pointerEvents = 'none'; //클릭 기능 비활성화(css)
 	}
 	
 	for(let i = startPage; i <= endPage; i++){
 		let li = document.createElement('li');
-		li.className = 'page-item';
+		if(i == page){
+			li.className = 'page-item active';
+		} else{
+			li.className = 'page-item';
+		}
 		let a = document.createElement('a');
 		a.className = 'page-link';
 		a.setAttribute('data-page', i);
@@ -157,11 +168,13 @@ function createPageList(page, totalCnt){ //현재 페이지 매개변수로 받�
 	}
 	
 	if(next){
-		nextLi.querySelector('li a').setAttribute('data-page', endPage + 1);
+		nextLi.querySelector('a').setAttribute('data-page', endPage + 1);
+		nextLi.querySelector('a').style.pointerEvents = 'auto';
 	} else {
-		nextLi.querySelector('li a').preventDefault();
+		nextLi.querySelector('a').style.pointerEvents = 'none';
 	}
 	
+	console.log(prev, next, prevLi.querySelector('a'));
 	/*
 	if(next){
 		let li = document.createElement('li');
@@ -212,14 +225,18 @@ document.querySelector('#addReplyBtn').addEventListener('click', (e) => {
 	document.querySelector('#addReplyBox div textarea').value = "";
 	//let replyer = document.querySelector('#addReplyBox span').innerText;
 	
+	
 	svc.addReply({bno, reply, replyer: logId},
 	function(result){
 		console.log(result);
 		if(result.retCode == "OK"){
+			/*
 			let template = makeLi(result.retVal);
 			document.querySelector('.reply ul li').after(template);
 			let button = document.querySelector('.reply ul li').lastElementChild;
 			button.addEventListener('click', deleteRow);
+			*/
+			showList(1);
 		} else if(result.retCode == "FAIL"){
 		alert('다시 입력해주세요.');
 		} else {
