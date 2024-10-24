@@ -10,13 +10,13 @@ public class HashMapMain {
 		//Java10 이상 버전에서 var타입 Map 쓸 수도 있기는 함.
 		//var 선언 시 내부 타입을 바로 알 수 없어 비선호하지만 코드가 간단해짐.
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		
 		//Map 컬렉션에 객체 저장
 		map.put("김자바", 30);
 		map.put("강자바", 30);
 		map.put("김백백", 80);
 		map.put("강자바", 35); //키가 같으므로 덮어쓰기 됨. (키 타입 String 외에 사용할 경우 중복값 확인 위해 hashCode, equals 메소드 재정의 필요.)
 		System.out.println("총 Entry 수 : " +  map.size());
+		System.out.println("맵 : " + map);
 		
 		//객체 찾기
 		System.out.println("강자바 키의 값: " + map.get("강자바"));

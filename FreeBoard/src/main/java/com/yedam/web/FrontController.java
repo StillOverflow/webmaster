@@ -12,13 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.yedam.common.Control;
+import com.yedam.control.AddEventControl;
+import com.yedam.control.CalendarControl;
+import com.yedam.control.CalendarjsonControl;
+import com.yedam.control.ChartControl;
+import com.yedam.control.CountByWriterControl;
 import com.yedam.control.JavascriptControl;
+import com.yedam.control.RemoveEventControl;
 import com.yedam.control.etcControl;
 import com.yedam.control.board.AddBoardControl;
 import com.yedam.control.board.AddBoardForm;
 import com.yedam.control.board.AddReplyControl;
 import com.yedam.control.board.BoardControl;
 import com.yedam.control.board.BoardListControl;
+import com.yedam.control.board.CountReplyControl;
 import com.yedam.control.board.ModifyBoardControl;
 import com.yedam.control.board.RemoveBoardControl;
 import com.yedam.control.board.RemoveReplyControl;
@@ -85,6 +92,16 @@ public class FrontController extends HttpServlet {
 		map.put("/addReply.do", new AddReplyControl());
 		//댓글의 전체 개수 가져오는 컨트롤러
 		map.put("/countReply.do", new CountReplyControl());
+		
+		//차트
+		map.put("/countByWriter.do", new CountByWriterControl());
+		map.put("/chart.do", new ChartControl());
+		
+		//캘린더(fullCalendar)
+		map.put("/calendarjson.do", new CalendarjsonControl());
+		map.put("/calendar.do", new CalendarControl());
+		map.put("/addEvent.do", new AddEventControl());
+		map.put("/removeEvent.do", new RemoveEventControl());
 	}
 	
 	@Override

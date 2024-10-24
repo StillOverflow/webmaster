@@ -37,7 +37,8 @@ function(err){
 
 //페이징방식 추가
 //기본출력 1페이지
-showList(1);
+let page = 1;
+showList(page);
 
 //pagination a 클릭 이벤트
 //forEach로 nodeList의 각각 매개변수마다 콜백함수 실행 가능.
@@ -52,7 +53,7 @@ function moveFunc(e){
 	e.preventDefault(); //기본이벤트(href) 차단(페이지이동 없이 값만 동적으로 가져옴)
 	console.log(e.target.innerHTML);
 	//let page = e.target.innerHTML;
-	let page = e.target.dataset.page; //데이터 담기 위해 dataset으로 가져옴
+	page = e.target.dataset.page; //데이터 담기 위해 dataset으로 가져옴
 	showList(page);
 }
 
@@ -208,7 +209,9 @@ function deleteRow(e){
 	function(result){
 	if(result.retCode == "OK"){
 		alert('댓글이 삭제되었습니다.');	
-		document.querySelector('.reply ul').removeChild(targetLi);
+		//document.querySelector('.reply ul').removeChild(targetLi);
+		console.log('현재페이지', page);
+		showList(page);
 	} else if(result.retCode == "FAIL"){
 		alert('ERROR: 처리 중 오류가 발생했습니다.');
 	} else {

@@ -107,5 +107,11 @@
 		    </choose>
 	   	</where>
 	</select>
+	
+	<select id="countByWriter" resultType="hashmap">
+		SELECT b.writer, m.member_name, COUNT(1) as "COUNT"
+		FROM   tbl_board b JOIN tbl_member m ON b.writer = m.member_id
+		GROUP BY b.writer, m.member_name
+	</select>
 
 </mapper>

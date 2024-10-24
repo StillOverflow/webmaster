@@ -1,18 +1,16 @@
 package com.yedam.test;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.yedam.common.DataSource;
 import com.yedam.common.SearchDTO;
 import com.yedam.mapper.BoardMapper;
-import com.yedam.service.MemberService;
-import com.yedam.service.MemberServiceImpl;
-import com.yedam.service.ReplyService;
-import com.yedam.service.ReplyServiceImpl;
 import com.yedam.vo.BoardVO;
-import com.yedam.vo.ReplyVO;
 
 public class AppTest {
 
@@ -57,6 +55,12 @@ public class AppTest {
 		for(BoardVO bvo2 : list) {
 			System.out.println(bvo2.toString());
 		}
+		
+		List<Map<String, Object>> bList = mapper.countByWriter();
+		
+		Gson gson = new GsonBuilder().create();
+		String json = gson.toJson(bList);
+		System.out.println(json);
 		
 //		MemberService memMapper = new MemberServiceImpl();
 //		System.out.println(memMapper.login("user01", "55555"));

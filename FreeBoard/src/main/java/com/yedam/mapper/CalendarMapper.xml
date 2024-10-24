@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.mapper.CalendarMapper">
+
+  <select id="events" resultType="HashMap">
+    select title as "title", 
+           start_date as "start",
+           end_date as "end"
+    from tbl_event
+  </select>
+  
+  <insert id="addEvent">
+  	INSERT INTO tbl_event
+    VALUES (#{title}, #{startDate}, #{endDate})
+  </insert>
+  
+  <delete id="deleteEvent">
+  	DELETE FROM tbl_event
+    WHERE title = #{title}
+    AND   start_date = #{startDate}
+    AND   
+    <choose>
+    	<when test="endDate == null">
+    	  (end_date IS NULL
+           OR end_date = #{endDate})
+    	</when>
+    	<otherwise>
+    	   end_date = #{endDate}
+    	</otherwise>
+    </choose>
+  </delete>
+  
+</mapper>
