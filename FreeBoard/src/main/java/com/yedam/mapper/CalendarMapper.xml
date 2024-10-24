@@ -23,8 +23,7 @@
     AND   
     <choose>
     	<when test="endDate == null">
-    	  (end_date IS NULL
-           OR end_date = #{endDate})
+    	  end_date IS NULL
     	</when>
     	<otherwise>
     	   end_date = #{endDate}
